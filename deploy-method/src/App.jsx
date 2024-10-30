@@ -16,6 +16,8 @@ function App() {
       <p>Deployed with GitHub Pages</p>
       <p>Deployed again</p>
       <p>and again and again</p>
+      <p>and again and again and again</p>
+      <p>Lunch time!</p>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
