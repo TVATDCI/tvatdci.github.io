@@ -21,15 +21,29 @@ function App() {
       console.log(data.slip.advice);
       setAdvice(data.slip.advice);
       {/* Nesting setCount inside getAdvice function, which means that the count is attached to onClick event {getAdvice}, too, and  will be updated directly after the advice is fetched and parsed. It will increase the {count} by 1 */ }
-      setCount(count + 1);
-      {/* setCount((prevCount) => prevCount + 1); */ }
+      {/**
+        *setCount(count + 1);
+        * is commented out for a reason. It is not recommended to use the current state value to update the state.
+        * Reason: Asynchronous nature of the setState function. 
+        * The state updates are batched and not guaranteed to be synchronous,
+        * which results in the state not being updated correctly and unpredictably!
+        * To avoid this, use the function form of the setState, which takes the previous state as an argument (below).
+        */}
+      setCount((prevCount) => prevCount + 1);
 
       setError(null);
     } catch (error) {
       setError("Failed to fetch advice. Please try again later.");
       setAdvice("");
     }
+
+    {/** Next inserting the useEffect hook to fetch the data when the component mounts */ }
+    useEffect(function () {
+      getAdvice();
+    }, []);
   }
+
+
 
   return (
     <>
@@ -48,11 +62,11 @@ function App() {
       <button onClick={getAdvice}>Try getting an advice of the day</button> <br />
       {error && <h4 style={{ color: "red" }}>{error}</h4>}
       <h4>{advice}</h4>
+      <p>You have read <strong>{count}</strong> </p>
 
       {/** Adding the counter function */}
       <h2>V.2</h2>
-      <h3>Counter</h3>
-      <p>You have read <strong>{count}</strong> </p>
+      <h3>Counter-Attached-above</h3>
     </>
   );
 
