@@ -1,13 +1,32 @@
 import { useState, useEffect } from "react";
+
 import solarLogo from "./assets/solar.svg";
-import "./App.css";
 import Heading from "./components/Heading";
 import Product from "./components/Product";
+import Users from "./components/Users";
+import About from "./components/About";
+
+import "./App.css";
+
+const props = {
+  count: 0,
+  greeting: "good morning",
+};
+
+console.log(props.greeting);
+
+
+
 export default function App() {
   const [advice, setAdvice] = useState("");
   const [error, setError] = useState(null);
 
+  // Adding the count state from About.jsx to the App component
   const [count, setCount] = useState(0);
+  const [showUsers, setShowUsers] = useState(false);
+
+
+  const [counts, setCounts] = useState(0);
 
   // getAdvice function using method async await to fetch data
   async function getAdvice() {
@@ -37,7 +56,7 @@ export default function App() {
          * To avoid this, use the function form of the setState, which takes the previous state as an argument (below).
          */
       }
-      setCount((prevCount) => prevCount + 1);
+      setCounts((prevCount) => prevCount + 1);
 
       setError(null);
     } catch (error) {
@@ -57,7 +76,12 @@ export default function App() {
     <>
       <div>
         <a href="https://react.dev" target="_blank">
-          <img style={{ borderRadius: "50%" }} src={solarLogo} className="logo react" alt="Solar logo " />
+          <img
+            style={{ borderRadius: "50%" }}
+            src={solarLogo}
+            className="logo react"
+            alt="Solar logo "
+          />
         </a>
       </div>
       <Heading
@@ -82,15 +106,28 @@ export default function App() {
       {/** <p>You have read<strong>{count}</strong>pieces of advice </p>
        * The above line is replaced with the Msg (props) function below to as "method" make the code cleaner and more readable.
        */}
-      <Msg count={count} />
-      <p>The props is passed to the Msg function with the count value. <br /> The Msg function returns a paragraph with the count value. <br /> You can also use the props.children to render the children of the component.
-        <br /> Another example of (About.jsx) props will be created in an extra component.</p>
+      <Msg counts={counts} />
+      <p>
+        The props is passed to the Msg function with the count value. <br /> The
+        Msg function returns a paragraph with the count value. <br /> You can
+        also use the props.children to render the children of the component.
+        <br /> Another example of (About.jsx) props will be created in an extra
+        component.
+      </p>
       {/** Adding the counter function */}
       <h2>V.2</h2>
       <h4>Counter-Attached-above</h4>
       <h2>V.3</h2>
-      <Product />
 
+
+      <div>
+        <button onClick={() => setShowUsers(!showUsers)} >toggle pages between Users & Products</button>
+
+        <About greeting={"good afternoon"} text={"The text works well, too. I need to work why the count still does not function"} />
+
+        {showUsers ? <Users /> : <Product count={count} greeting={"HEY!"} />}
+
+      </div>
     </>
   );
 }
@@ -101,10 +138,10 @@ export default function App() {
    */
 }
 
-function Msg(props) {
+function Msg(counterProps) {
   return (
     <h5>
-      You have read <h4>{props.count}</h4> pieces of advice
+      You have read <h4>{counterProps.counts}</h4> pieces of advice
     </h5>
   );
 }
