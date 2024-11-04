@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import solarLogo from "./assets/solar.svg";
 import "./App.css";
 import Heading from "./components/Heading";
-
+import Product from "./components/Product";
 export default function App() {
   const [advice, setAdvice] = useState("");
   const [error, setError] = useState(null);
@@ -83,9 +83,14 @@ export default function App() {
        * The above line is replaced with the Msg (props) function below to as "method" make the code cleaner and more readable.
        */}
       <Msg count={count} />
+      <p>The props is passed to the Msg function with the count value. <br /> The Msg function returns a paragraph with the count value. <br /> You can also use the props.children to render the children of the component.
+        <br /> Another example of (About.jsx) props will be created in an extra component.</p>
       {/** Adding the counter function */}
       <h2>V.2</h2>
-      <h3>Counter-Attached-above</h3>
+      <h4>Counter-Attached-above</h4>
+      <h2>V.3</h2>
+      <Product />
+
     </>
   );
 }
@@ -98,8 +103,8 @@ export default function App() {
 
 function Msg(props) {
   return (
-    <p>
-      You have read <strong>{props.count}</strong> pieces of advice
-    </p>
+    <h5>
+      You have read <h4>{props.count}</h4> pieces of advice
+    </h5>
   );
 }
